@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>キャラぷ外部アクセス検証</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 3rem auto; padding: 0 1rem; line-height: 1.7; }
+    code { background: #f1f3f5; padding: .2rem .4rem; border-radius: .3rem; overflow-wrap: anywhere; }
+    .card { border: 1px solid #bbb; border-radius: .7rem; padding: 1rem; margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>外部アクセス検証ページ</h1>
+  <p>このページは、AIがURL先の内容を実際に取得できるか確認するためのテストです。</p>
+  <div class="card">
+    <h2>検証コード（HTML本文）</h2>
+    <p id="static-token"><code>26BDC7651F6190930AD3422E18E1B3E2</code></p>
+  </div>
+  <div class="card">
+    <h2>検証フレーズ（HTML本文）</h2>
+    <p><code>NDRP-CHECK-76BF36499456C8B4</code></p>
+  </div>
+  <div class="card">
+    <h2>JavaScript実行テスト</h2>
+    <p>実行結果： <code id="js-result">未実行</code></p>
+  </div>
+  <script>
+    // この値はページ内JavaScriptが実行された場合にのみ画面へ表示される。
+    const seed = "89a997e1cfd78334";
+    const bytes = new Uint8Array(8);
+    if (window.crypto && window.crypto.getRandomValues) {
+      window.crypto.getRandomValues(bytes);
+      document.getElementById("js-result").textContent =
+        "JS-RAN-" + Array.from(bytes, b => b.toString(16).padStart(2, "0")).join("").toUpperCase();
+    } else {
+      document.getElementById("js-result").textContent = "JS-RAN-FALLBACK-" + seed.toUpperCase();
+    }
+  </script>
+</body>
+</html>
